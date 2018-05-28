@@ -24,13 +24,14 @@
     var frontg = new Image();
     var pipeUp = new Image();
     var pipeBottom = new Image();
-    
+    var blackbg = new Image();
+
     bird.src = "img/bird.png";
     backg.src = "img/bg.png";
     frontg.src = "img/fg.png";
     pipeUp.src = "img/pipeUp.png";
     pipeBottom.src = "img/pipeBottom.png";
-    
+    blackbg.src = "img/blackbg.png";
     
     //audio files
     var flyA = new Audio();
@@ -49,9 +50,9 @@
     var score = 0;
     //get images
     function draw(){
-    	
-    
-    	ctx.drawImage(backg,0,0);
+
+        ctx.drawImage(backg,0,0);
+    	ctx2.drawImage(blackbg,0,0);
     	for(var i=0; i<pipe.length; i++){
     	ctx.drawImage(pipeUp,pipe[i].x,pipe[i].y);
     	ctx.drawImage(pipeBottom,pipe[i].x,pipe[i].y
@@ -67,28 +68,33 @@
     			 pipeUp.height
     			});
     	       }
-    if(x+bird.width >= pipe[i].x 
+
+    if(x+bird.width >= pipe[i].x
     	&& x<=pipe[i].x+pipeUp.width
-    	&&(y<=pipe[i].y + pipeUp.height 
+    	&&(y<=pipe[i].y + pipeUp.height
     	|| y + bird.height >= pipe[i].y +pipeUp.height +gap)|| y + bird.height >= cvs.height - frontg.height){
     	location.reload();
+
     }
-    if (pipe[i].x == 5) {
-    
-    	score++;
-    	scoreA.play();
-    }
-    	}
-    	
+            if (pipe[i].x == 5) {
+                score++;
+                scoreA.play();
+            }
+
+        }
+
     	ctx.drawImage(frontg,0,cvs.height - frontg.height);
-      
+        ctx2.fillStyle= "white";
+        ctx2.font = "24px Verdana";
+        ctx2.fillText("Score: "+score,25,20);
+
     	ctx.drawImage(bird,x,y);
-    
     	y += grav;
     	requestAnimationFrame(draw);
     }
+
+
+
     pipeBottom.onload = draw;
-     		  ctx2.fillStyle= "black";
-        ctx2.font = "24px Verdana";
-        ctx2.fillText("Score: "+score,25,20); 	
+
 
